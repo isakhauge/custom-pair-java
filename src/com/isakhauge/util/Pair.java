@@ -103,6 +103,7 @@ public class Pair<K,V> implements Comparable<Pair> {
 		try {
 			double d = Double.parseDouble(String.valueOf(value));
 		} catch (NumberFormatException | NullPointerException | ClassCastException e) {
+			e.printStackTrace();
 			return false;
 		}
 		return true;
@@ -118,6 +119,7 @@ public class Pair<K,V> implements Comparable<Pair> {
 		try {
 			double d = Double.parseDouble(String.valueOf(key));
 		} catch (NumberFormatException | NullPointerException | ClassCastException e) {
+			e.printStackTrace();
 			return false;
 		}
 		return true;
@@ -175,6 +177,7 @@ public class Pair<K,V> implements Comparable<Pair> {
 	 * @param o Another {@code Pair} object.
 	 * @return {@code int}
 	 * @author Isak Hauge
+	 * FIXME: Cannot sort Integer values for some reason.
 	 */
 	@Override
 	public int compareTo(Pair o) {
@@ -182,17 +185,26 @@ public class Pair<K,V> implements Comparable<Pair> {
 			if (this.valueIsNumeric() && o.valueIsNumeric()) {
 				double self = ((double) this.getValue());
 				double other = ((double) o.getValue());
-				return Double.compare(self, other);
+				System.out.println(self + ", " + other);
+				if (self < other) return -1;
+				else if (self > other) return 1;
+				else return 0;
 			} else if (this.keyIsNumeric() && o.keyIsNumeric()){
 				double self = ((double) this.getKey());
 				double other = ((double) o.getKey());
-				return Double.compare(self, other);
+				if (self < other) return -1;
+				else if (self > other) return 1;
+				else return 0;
+			} else {
+				return 0;
 			}
 		} catch (NullPointerException npe) {
 			throw new NullPointerException("Cannot compare with an non-existing object.");
 		} catch (ClassCastException cce) {
 			return 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
 		}
-		return 0;
 	}
 }
