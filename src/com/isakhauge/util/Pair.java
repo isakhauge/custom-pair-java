@@ -199,7 +199,7 @@ public class Pair<K,V> implements Comparable<Pair> {
 				return 0;
 			}
 		} catch (NullPointerException npe) {
-			throw new NullPointerException("Cannot compare with an non-existing object.");
+			throw new NullPointerException("Cannot compare with a non-existing object.");
 		} catch (ClassCastException cce) {
 			return 0;
 		} catch (Exception e) {
